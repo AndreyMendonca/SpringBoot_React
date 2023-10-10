@@ -1,24 +1,34 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import Formulario from './Formulario';
+import Tabela from './Tabela';
 
 function App() {
+
+  //objeito produto
+  const product = {
+      id : 0,
+      name: ''
+  }
+
+  //useState
+  const [btnCadastrar, setBtnCadastrar] = useState(true);
+
+  const [products, setProdutos] = useState([]);
+
+  //useEffect
+  useEffect (() =>{
+    fetch("http://localhost:8080/products")
+    .then(retorno => retorno.json())
+    .then(retorno_convertido => setProdutos(retorno_convertido));
+  },[]
+  )
+ 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Formulario botao={btnCadastrar}/>
+      <Tabela vetor={products}/>
+    </>
   );
 }
 
