@@ -32,4 +32,21 @@ public class ProductService {
 			return new ResponseEntity<Product>(repository.save(product),HttpStatus.CREATED);
 		}
 	}
+	public ResponseEntity<?> update(Product product){
+		//validar se o produto for cadastrado
+		if(product.getName().equals("")) {
+			response.setMessagem("O nome é obrigátorio!");
+			return new ResponseEntity<ProductResponse>(response, HttpStatus.BAD_REQUEST);
+		}else {
+			return new ResponseEntity<Product>(repository.save(product),HttpStatus.OK);
+		}
+	}
+	
+	public ResponseEntity<ProductResponse> delete(Long id){
+		repository.deleteById(id);
+		
+		response.setMessagem("O produto foi deletado com sucesso!");
+		return new ResponseEntity<ProductResponse>(response, HttpStatus.OK);
+	
+	}
 }
